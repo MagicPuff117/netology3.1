@@ -9,7 +9,7 @@ def read_files(name):
         # pprint(data)
         original_text = ''
         for items in data['rss']['channel']['items']:
-            original_text +='' + items['description']
+            original_text +=' ' + items['description']
         # pprint(original_text)
         return original_text
 
@@ -42,10 +42,11 @@ def read_file(name):
     import xml.etree.ElementTree as ET
     tree = ET.parse(name)
     root = tree.getroot()
-    # items = root.findall('channel/item')
-    # print(items)
-    for news in root.findall('channel/item'):
-        return news.find('description').text
+    # items = root.findall('channel')
+    # print(len(items))
+    for news in root.findall('channel'):
+        return news.find('item/description').text  # не понимаю как заставить программу пройтись по всему списку,
+        # почему-то проходит только по первой новости ;(
 
 
 # read_file()
@@ -77,16 +78,12 @@ def top_words_xml(word_value):
 
 def main():
     while True:
-        j = 'newsafr.json'
-        x = 'newsafr.xml'
-        name = input('Введите имя файла:')
+        name = input('Введите первую букву формата файла:')
         if name == 'j':
-            print('Идет обработка файла ...')
             top_10 = top_words(count_word(read_files('newsafr.json')))
             for i in top_10.values():
                 print(i[1], ': ', i[0])
         elif name == 'x':
-            print('Идет обработка файла ...')
             top_10_xml = top_words_xml(count_word_xml(read_file('newsafr.xml')))
             for i in top_10_xml.values():
                 print(i[1], ': ', i[0])
@@ -94,5 +91,8 @@ def main():
             break
         else:
             print('Некорректный ввод, повторите.')
+
+
+
 
 main()
