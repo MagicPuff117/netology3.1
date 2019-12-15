@@ -10,8 +10,8 @@ def read_files(name):
         original_text = ''
         for items in data['rss']['channel']['items']:
             original_text +=' ' + items['description']
-        # pprint(original_text)
-        return original_text
+        # pprint(original_text.upper())
+        return original_text.lower()
 
 # read_files('newsafr.json')
 
@@ -42,11 +42,12 @@ def read_file(name):
     import xml.etree.ElementTree as ET
     tree = ET.parse(name)
     root = tree.getroot()
-    # items = root.findall('channel')
+    items = root.findall('channel/item')
     # print(len(items))
-    for news in root.findall('channel'):
-        return news.find('item/description').text  # не понимаю как заставить программу пройтись по всему списку,
-        # почему-то проходит только по первой новости ;(
+    for news in items:
+        print(news.find('description').text.lower()) ### при отсутствии return возвращается текств сех новостей###
+        return news.find('description').text.lower()
+        ### return не выводит все description, а только первый. при print обрбатывается текст каждой новости.###
 
 
 # read_file()
