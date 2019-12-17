@@ -7,12 +7,12 @@ def read_files(name):
         data = f.read()
         data = json.loads(data)
         # pprint(data)
-        original_text = ''
+        original_text = ' '
         for items in data['rss']['channel']['items']:
             original_text +=' ' + items['description']
         # pprint(original_text.upper())
         return original_text.lower()
-
+#
 # read_files('newsafr.json')
 
 def count_word(original_text):
@@ -44,13 +44,14 @@ def read_file(name):
     root = tree.getroot()
     items = root.findall('channel/item')
     # print(len(items))
+    # news.find('description').text.lower()
     for news in items:
-        print(news.find('description').text.lower()) ### при отсутствии return возвращается текств сех новостей###
-        return news.find('description').text.lower()
-        ### return не выводит все description, а только первый. при print обрбатывается текст каждой новости.###
+        print(news.find('description').text.lower())
+    return news.find('description').text.lower()
 
 
-# read_file()
+
+# read_file('newsafr.xml')
 
 def count_word_xml(news):
     list = news.split(' ')
