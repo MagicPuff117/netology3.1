@@ -39,22 +39,25 @@ def top_words(word_value):
     return top_10
 
 def read_file(name):
+
     import xml.etree.ElementTree as ET
     tree = ET.parse(name)
     root = tree.getroot()
     items = root.findall('channel/item')
     # print(len(items))
     # news.find('description').text.lower()
+    news_xml = ''
     for news in items:
-        print(news.find('description').text.lower())
-    return news.find('description').text.lower()
+        news_xml += ' ' + news.find('description').text.lower()
+        # print(news_xml)
+    return news_xml
 
 
 
 # read_file('newsafr.xml')
 
-def count_word_xml(news):
-    list = news.split(' ')
+def count_word_xml(news_xml):
+    list = news_xml.split(' ')
     word_value = {}
     for word in list:
         if len(word) > 6:
